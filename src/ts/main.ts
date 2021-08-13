@@ -2,6 +2,7 @@ const pokeContainer = document.getElementById(
   'poke-container'
 ) as HTMLDivElement;
 const pokemonCount = 151;
+
 const colors = {
   fire: '#fddfdf',
   grass: '#defde0',
@@ -21,27 +22,47 @@ const colors = {
 
 const mainTypes = Object.keys(colors);
 
-const createPokemonCard = (pokemon) => {
+type PokemonData = {
+  id: number;
+  name: string;
+  types: {
+    type: {
+      name: string;
+    };
+  }[];
+  sprites: {
+    other: {
+      ['official-artwork']: {
+        front_default: string;
+      };
+    };
+  };
+};
+
+const createPokemonCard = (pokemon: PokemonData) => {
   const pokemonEl = document.createElement('div');
   pokemonEl.classList.add('pokemon');
 
   const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
   const id = pokemon.id.toString().padStart(3, '0');
   const pokeTypes = pokemon.types.map((type) => type.type.name);
-  const type = mainTypes.find((type) => pokeTypes.indexOf(type) > -1);
-  const color = colors[type];
+  const type = mainTypes.find((item) => pokeTypes.indexOf(item) > -1);
+  const color: string = type !== undefined ? colors[type] : null;
+  const image = pokemon.sprites.other['official-artwork'].front_default;
+
+  console.log(pokemon);
 
   pokemonEl.style.backgroundColor = color;
 
   const pokemonInnerHTML = `
     <div class="img-container">
       <img
-        src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png"
+        src=${image}
         alt="${name}"
       />
     </div>
     <div class="info">
-      <div class="number">#${id}</div>
+      <div class="number"># ${id}</div>
       <h3 class="name">${name}</h3>
       <small class="type">Type: <span>${type}</span></small>
     </div>
@@ -52,7 +73,7 @@ const createPokemonCard = (pokemon) => {
   pokeContainer?.appendChild(pokemonEl);
 };
 
-const getPokemon = async (id) => {
+const getPokemon = async (id: number) => {
   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   const res = await fetch(url);
   const data = await res.json();

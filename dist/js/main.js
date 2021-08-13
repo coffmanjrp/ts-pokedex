@@ -60,10 +60,12 @@ var createPokemonCard = function (pokemon) {
     var name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
     var id = pokemon.id.toString().padStart(3, '0');
     var pokeTypes = pokemon.types.map(function (type) { return type.type.name; });
-    var type = mainTypes.find(function (type) { return pokeTypes.indexOf(type) > -1; });
-    var color = colors[type];
+    var type = mainTypes.find(function (item) { return pokeTypes.indexOf(item) > -1; });
+    var color = type !== undefined ? colors[type] : null;
+    var image = pokemon.sprites.other['official-artwork'].front_default;
+    console.log(pokemon);
     pokemonEl.style.backgroundColor = color;
-    var pokemonInnerHTML = "\n    <div class=\"img-container\">\n      <img\n        src=\"https://pokeres.bastionbot.org/images/pokemon/" + pokemon.id + ".png\"\n        alt=\"" + name + "\"\n      />\n    </div>\n    <div class=\"info\">\n      <div class=\"number\">#" + id + "</div>\n      <h3 class=\"name\">" + name + "</h3>\n      <small class=\"type\">Type: <span>" + type + "</span></small>\n    </div>\n    ";
+    var pokemonInnerHTML = "\n    <div class=\"img-container\">\n      <img\n        src=" + image + "\n        alt=\"" + name + "\"\n      />\n    </div>\n    <div class=\"info\">\n      <div class=\"number\"># " + id + "</div>\n      <h3 class=\"name\">" + name + "</h3>\n      <small class=\"type\">Type: <span>" + type + "</span></small>\n    </div>\n    ";
     pokemonEl.innerHTML = pokemonInnerHTML;
     pokeContainer === null || pokeContainer === void 0 ? void 0 : pokeContainer.appendChild(pokemonEl);
 };
