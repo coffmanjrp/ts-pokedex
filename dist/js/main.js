@@ -63,7 +63,6 @@ var createPokemonCard = function (pokemon) {
     var type = mainTypes.find(function (item) { return pokeTypes.indexOf(item) > -1; });
     var color = type !== undefined ? colors[type] : null;
     var image = pokemon.sprites.other['official-artwork'].front_default;
-    console.log(pokemon);
     pokemonEl.style.backgroundColor = color;
     var pokemonInnerHTML = "\n    <div class=\"img-container\">\n      <img\n        src=" + image + "\n        alt=\"" + name + "\"\n      />\n    </div>\n    <div class=\"info\">\n      <div class=\"number\"># " + id + "</div>\n      <h3 class=\"name\">" + name + "</h3>\n      <small class=\"type\">Type: <span>" + type + "</span></small>\n    </div>\n    ";
     pokemonEl.innerHTML = pokemonInnerHTML;

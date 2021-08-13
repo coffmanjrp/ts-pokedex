@@ -50,8 +50,6 @@ const createPokemonCard = (pokemon: PokemonData) => {
   const color: string = type !== undefined ? colors[type] : null;
   const image = pokemon.sprites.other['official-artwork'].front_default;
 
-  console.log(pokemon);
-
   pokemonEl.style.backgroundColor = color;
 
   const pokemonInnerHTML = `
